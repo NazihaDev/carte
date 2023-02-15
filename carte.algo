@@ -1,0 +1,57 @@
+program jeuCartes;
+
+ {Pour simplifier l'exercice on considere seulement le type de carte coeur}
+ {Il existe 26 cartes de type coeur dans le jeu (2 x 13)}
+
+ uses crt;
+ type
+        main = array[1 .. 15] of integer;
+ const
+        n = 15;   {taille de la main}
+ var
+
+        m : main;       {la main}
+        i : integer;    {compteur}
+        c : char;       {pour empecher la femeture de la fenetre}
+        pos : integer;  {la position d'insertion}
+        j : integer;    {compteur}
+        tmp : integer;
+
+        procedure affMain(m : main; t : integer);
+        var
+                i : integer;
+        begin
+                {Affichage de la main}
+                for i:= 1 to t do
+                begin
+                        write(m[i], ' ');
+                end;
+        end;
+ begin
+        clrscr;
+        {Remplissage de la main}
+        for i:= 1 to n do
+        begin
+                write('Donner la carte ', i, ' : ');
+                readln(m[i]);
+                tmp :=  m[i];   {Prendre une copie}
+                {Chercher la position d'insertion}
+                j := 1;
+                while((m[i] > m[j]) and (j < i)) do
+                begin
+                        j := j+1;
+                end;
+                pos := j;
+                writeln('pos = ', pos);
+                for j := i downto pos+1 do
+                begin
+                        m[j] := m[j-1];
+                end;
+                {insertion}
+                m[pos] := tmp;
+                affMain(m, i);
+                writeln;
+        end;
+        {Affichage de la main}
+        affMain(m, n);
+ end.
